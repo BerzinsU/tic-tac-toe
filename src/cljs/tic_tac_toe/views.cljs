@@ -45,15 +45,16 @@
 (defn board-tile [id]
   (let [clicked?- (sb/tile-clicked?- id)]
     (fn []
-      [:div {:style    (cond-> {:flex            "1 0 33%"
-                                :display         "flex"
-                                :align-items     "center"
-                                :justify-content "center"
-                                :max-width       180
-                                :max-height      180
-                                :border          "1px solid grey"}
-                               @clicked?- (assoc :background-color "green"))
-             :on-click #(rf/dispatch [:tile-clicked id])}])))
+      (let [color (when @clicked?- (:color @(sb/get-player- @clicked?-)))]
+        [:div {:style    (cond-> {:flex            "1 0 33%"
+                                  :display         "flex"
+                                  :align-items     "center"
+                                  :justify-content "center"
+                                  :max-width       180
+                                  :max-height      180
+                                  :border          "1px solid grey"}
+                                 @clicked?- (assoc :background-color color))
+               :on-click #(rf/dispatch [:tile-clicked id])}]))))
 
 (defn game-board []
   [:div {:style {:flex            "2 0 auto"
@@ -81,8 +82,7 @@
   [:div {:style {:display        "flex"
                  :min-height     "100%"
                  :font-family    "Avenir"
-                 :flex-direction "column"
-                 }}
+                 :flex-direction "column"}}
    [header
     [title]
     [player-cards]]

@@ -4,9 +4,12 @@
             [reagent.ratom :as ra :include-macros true]))
 
 (def default-db
-  {:name    "tic-tac-toe"
-   :players {1 {:name  "Player 1"
-                :score 0}
-             2 {:name  "Player 2"
-                :score 0}}})
+  {:name          "tic-tac-toe"
+   :active-player 1
+   :players       {1 {:name  "Player 1"
+                      :score 0
+                      :color "green"}
+                   2 {:name  "Player 2"
+                      :score 0
+                      :color "blue" }}})
 
