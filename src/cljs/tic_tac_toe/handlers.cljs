@@ -12,6 +12,9 @@
   (let [active-player- (sb/get-active-player-)]
     (assoc-in db [:active-player] (quot 2 @active-player-))))
 
+(defn- check-board-for-rows [db]
+  )
+
 (rf/reg-event-db
   :tile-clicked
   (fn [db [_ id]]
@@ -22,6 +25,11 @@
 (rf/reg-event-db
   :reset-board
   (fn [db [_]]
-    (->
-      (assoc-in db [:tiles] nil)
-      (assoc-in [:active-player] 1))))
+    (let [tiles (get-in db [:tiles])]
+      (println tiles)
+      (->
+        (assoc-in db [:tiles] (reduce (fn [tiles tile]
+                                        (merge tiles (dissoc (second tile) :clicked)))
+                                      tiles))
+        (println)
+        (assoc-in [:active-player] 1)))))

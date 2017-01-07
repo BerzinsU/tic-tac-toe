@@ -17,6 +17,13 @@
 (defn get-active-player- []
   (ra/reaction (get-active-player @app-db)))
 
+(defn- tile [db id]
+  (get-in db [:tiles id]))
+
+
+(defn tile- [id]
+  (reaction (tile @app-db id)))
+
 (defn- tile-clicked? [db id]
   (get-in db [:tiles id :clicked]))
 

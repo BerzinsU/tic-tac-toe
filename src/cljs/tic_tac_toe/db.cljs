@@ -11,5 +11,22 @@
                       :color "green"}
                    2 {:name  "Player 2"
                       :score 0
-                      :color "blue" }}})
+                      :color "blue"}}
+   :tiles         {1 {:magic-number 2}
+                   2 {:magic-number 7}
+                   3 {:magic-number 6}
+                   4 {:magic-number 9}
+                   5 {:magic-number 5}
+                   6 {:magic-number 1}
+                   7 {:magic-number 4}
+                   8 {:magic-number 3}
+                   9 {:magic-number 8}}
+   :rows          [[1 2 3]
+                   [4 5 6]
+                   [7 8 9]
+                   [1 4 7]
+                   [2 5 8]
+                   [3 6 9]
+                   [1 5 9]
+                   [3 5 7]]})
 

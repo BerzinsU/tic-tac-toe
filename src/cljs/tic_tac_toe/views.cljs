@@ -43,7 +43,8 @@
         contents))
 
 (defn board-tile [id]
-  (let [clicked?- (sb/tile-clicked?- id)]
+  (let [clicked?- (sb/tile-clicked?- id)
+        tile- (sb/tile- id)]
     (fn []
       (let [color (when @clicked?- (:color @(sb/get-player- @clicked?-)))]
         [:div {:style    (cond-> {:flex            "1 0 33%"
@@ -54,7 +55,9 @@
                                   :max-height      180
                                   :border          "1px solid grey"}
                                  @clicked?- (assoc :background-color color))
-               :on-click #(rf/dispatch [:tile-clicked id])}]))))
+               :on-click #(when (not @clicked?-)
+                           (rf/dispatch [:tile-clicked id]))}
+         @tile-]))))
 
 (defn game-board []
   [:div {:style {:flex            "2 0 auto"
@@ -68,7 +71,7 @@
                   :max-width     540
                   :max-height    540
                   :border-radius 3}}
-    (for [n (range 9)]
+    (for [n (range 1 10)]
       ^{:key n}
       [board-tile n])]])
 
