@@ -68,15 +68,9 @@
                   :max-width     540
                   :max-height    540
                   :border-radius 3}}
-    [board-tile 1]
-    [board-tile 2]
-    [board-tile 3]
-    [board-tile 4]
-    [board-tile 5]
-    [board-tile 6]
-    [board-tile 7]
-    [board-tile 8]
-    [board-tile 9]]])
+    (for [n (range 9)]
+      ^{:key n}
+      [board-tile n])]])
 
 (defn main-panel []
   [:div {:style {:display        "flex"
