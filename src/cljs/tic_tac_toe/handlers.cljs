@@ -13,13 +13,25 @@
     (assoc-in db [:active-player] (quot 2 @active-player-))))
 
 (defn- check-board-for-rows [db]
-  )
+  (let [tiles (get-in db [:tiles])
+        rows (get-in db [:rows])]
+    (println "Detecting full rows")
+    (doall (for [row rows]
+             (->>
+               (select-keys tiles row)
+               (filter #(:clicked (second %)))
+               (map (comp :magic-number second))
+               (apply +)
+               (str row ":")
+               (println))))
+    db))
 
 (rf/reg-event-db
   :tile-clicked
   (fn [db [_ id]]
     (let [active-player- (sb/get-active-player-)]
       (-> (assoc-in db [:tiles id :clicked] @active-player-)
+          (check-board-for-rows)
           (switch-player)))))
 
 (rf/reg-event-db
