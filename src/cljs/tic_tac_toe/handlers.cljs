@@ -26,10 +26,10 @@
   :reset-board
   (fn [db [_]]
     (let [tiles (get-in db [:tiles])]
-      (println tiles)
       (->
-        (assoc-in db [:tiles] (reduce (fn [tiles tile]
-                                        (merge tiles (dissoc (second tile) :clicked)))
+        (assoc-in db [:tiles] (reduce (fn [tiles [index value]]
+                                        (assoc tiles index (dissoc value :clicked)))
+                                      {}
                                       tiles))
-        (println)
+
         (assoc-in [:active-player] 1)))))
