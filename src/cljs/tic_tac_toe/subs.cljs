@@ -11,6 +11,12 @@
 (defn get-player- [id]
   (reaction (get-player @app-db id)))
 
+(defn- player-score [db id]
+  (:score (get-player db id)))
+
+(defn player-score- [id]
+  (reaction (player-score @app-db id)))
+
 (defn- get-active-player [db]
   (get-in db [:active-player]))
 
