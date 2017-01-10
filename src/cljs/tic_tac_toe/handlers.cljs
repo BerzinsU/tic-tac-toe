@@ -43,12 +43,21 @@
                                         (assoc tiles index (dissoc value :clicked)))
                                       {}
                                       tiles))
-
+        (assoc-in [:game-state] :play)
         (assoc-in [:active-player] 1)))))
+
+(rf/reg-event-db
+  :reset-score
+  (fn [db [_]]
+    (->
+      (assoc-in db [:players 1 :score] 0)
+      (assoc-in [:players 2 :score] 0))))
 
 (rf/reg-event-db
   :game-won
   (fn [db [_ player row]]
     (let [player-score @(sb/player-score- player)]
-    (println (str "Player " player " won on row " row))
-    (assoc-in db [:players player :score] (inc player-score)))))
+      (println (str "Player " player " won on row " row))
+      (->
+        (assoc-in db [:game-state] :won)
+        (assoc-in [:players player :score] (inc player-score))))))

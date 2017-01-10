@@ -6,6 +6,7 @@
 (def default-db
   {:name          "tic-tac-toe"
    :active-player 1
+   :game-state    :play
    :players       {1 {:name  "Player 1"
                       :score 0
                       :color "green"}

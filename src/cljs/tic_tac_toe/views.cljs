@@ -25,17 +25,26 @@
        [player-name (:name @player-)]
        [player-score (:score @player-)]])))
 
-(defn reset-button []
+(defn reset-board-button []
   [:button {:style    {:width  100
                        :height 25}
             :on-click #(rf/dispatch [:reset-board])}
-   "Reset"])
+   "Reset board"])
+
+(defn reset-score-button []
+  [:button {:style    {:width  100
+                       :height 25}
+            :on-click #(rf/dispatch [:reset-score])}
+   "Reset score"])
 
 (defn player-cards []
   [:div {:style {:display     "flex"
                  :align-items "center"}}
    [player-card 1]
-   [reset-button]
+   [:div {:style {:display        "flex"
+                  :flex-direction "column"}}
+    [reset-board-button]
+    [reset-score-button]]
    [player-card 2]])
 
 (defn header [& contents]
