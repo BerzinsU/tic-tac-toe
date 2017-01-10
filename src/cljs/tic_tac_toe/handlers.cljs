@@ -40,7 +40,7 @@
     (let [tiles (get-in db [:tiles])]
       (->
         (assoc-in db [:tiles] (reduce (fn [tiles [index value]]
-                                        (assoc tiles index (dissoc value :clicked)))
+                                        (assoc tiles index (dissoc value :clicked :mark)))
                                       {}
                                       tiles))
         (assoc-in [:game-state] :play)
@@ -60,4 +60,7 @@
       (println (str "Player " player " won on row " row))
       (->
         (assoc-in db [:game-state] :won)
+        (assoc-in [:tiles (first row) :mark] 1)
+        (assoc-in [:tiles (second row) :mark] 1)
+        (assoc-in [:tiles (last row) :mark] 1)
         (assoc-in [:players player :score] (inc player-score))))))

@@ -32,8 +32,9 @@
    "Reset board"])
 
 (defn reset-score-button []
-  [:button {:style    {:width  100
-                       :height 25}
+  [:button {:style    {:width         100
+                       :height        25
+                       :margin-bottom 15}
             :on-click #(rf/dispatch [:reset-score])}
    "Reset score"])
 
@@ -43,17 +44,25 @@
    [player-card 1]
    [:div {:style {:display        "flex"
                   :flex-direction "column"}}
-    [reset-board-button]
-    [reset-score-button]]
+    [reset-score-button]
+    [reset-board-button]]
    [player-card 2]])
 
 (defn header [& contents]
   (into [:div {:style {}}]
         contents))
 
+(defn tile-mark []
+  (let [mark-color (sb/mark-color)]
+    [:div {:style {:height           50
+                   :width            50
+                   :border-radius    "50%"
+                   :background-color mark-color}}]))
+
 (defn board-tile [id]
   (let [clicked?- (sb/tile-clicked?- id)
-        tile- (sb/tile- id)]
+        marked?- (sb/tile-marked?- id)
+        game-state- (sb/game-state-)]
     (fn []
       (let [color (when @clicked?- (:color @(sb/get-player- @clicked?-)))]
         [:div {:style    (cond-> {:flex            "1 0 33%"
@@ -64,9 +73,11 @@
                                   :max-height      180
                                   :border          "1px solid grey"}
                                  @clicked?- (assoc :background-color color))
-               :on-click #(when (not @clicked?-)
+               :on-click #(when (and (not @clicked?-)
+                                     (= :play @game-state-))
                            (rf/dispatch [:tile-clicked id]))}
-         @tile-]))))
+         (when @marked?-
+           [tile-mark])]))))
 
 (defn game-board []
   [:div {:style {:flex            "2 0 auto"
@@ -87,7 +98,7 @@
 (defn main-panel []
   [:div {:style {:display        "flex"
                  :min-height     "100%"
-                 :font-family    "Avenir"
+                 :font-family    "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\""
                  :flex-direction "column"}}
    [header
     [title]
