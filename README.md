@@ -1,7 +1,7 @@
 # tic-tac-toe
 
 ![Image of first proto]
-(https://puu.sh/thUU5/f1a317ea32.png)
+(https://puu.sh/thV7j/ce487fcec4.png)
 
 A [re-frame](https://github.com/Day8/re-frame) application designed to play tic-tac-toe
 
