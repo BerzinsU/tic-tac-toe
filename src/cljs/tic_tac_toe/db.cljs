@@ -10,7 +10,7 @@
    :mark-color    "red"
    :players       {1 {:name  "Player 1"
                       :score 0
-                      :color "green"}
+                      :color "white"}
                    2 {:name  "Player 2"
                       :score 0
                       :color "blue"}}

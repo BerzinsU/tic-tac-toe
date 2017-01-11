@@ -52,7 +52,34 @@
   (into [:div {:style {}}]
         contents))
 
-(defn tile-mark []
+(defn circle []
+  ;<svg width= "200" height= "200" >
+  ;<circle class= "outer" cx= "95" cy= "95" r= "85" transform= "rotate(-90, 95, 95)" />
+  ;</svg>
+  [:svg {:width  140
+         :height 140}
+   [:circle.outer {:style     {:fill                 "transparent"
+                               :stroke               "green"
+                               :stroke-width         15
+                               :stroke-dasharray     534
+                               :transition           "stroke-dashoffset 1s"
+                               :animation-play-state "running"
+                               :stroke-dashoffset    0
+                               :animation            "show100 0.6s"}
+                   :cx        70
+                   :cy        70
+                   :r         60
+                   :transform "rotate(-90, 70, 70)"}]])
+
+(defn cross []
+  [:img {:src "http://activecalendar.com/wp-content/themes/activecalendar-2016/images/x-blue.svg"}])
+
+(defn tile-mark [player]
+  (if (= 1 player)
+    [circle]
+    [cross]))
+
+(defn tile-line-mark []
   (let [mark-color (sb/mark-color)]
     [:div {:style {:height           50
                    :width            50
@@ -76,8 +103,10 @@
                :on-click #(when (and (not @clicked?-)
                                      (= :play @game-state-))
                            (rf/dispatch [:tile-clicked id]))}
+         (when @clicked?-
+           [tile-mark @clicked?-])
          (when @marked?-
-           [tile-mark])]))))
+           [tile-line-mark])]))))
 
 (defn game-board []
   [:div {:style {:flex            "2 0 auto"
