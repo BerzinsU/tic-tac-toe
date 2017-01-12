@@ -58,21 +58,51 @@
   ;</svg>
   [:svg {:width  140
          :height 140}
-   [:circle.outer {:style     {:fill                 "transparent"
-                               :stroke               "green"
-                               :stroke-width         15
-                               :stroke-dasharray     534
-                               :transition           "stroke-dashoffset 1s"
-                               :animation-play-state "running"
-                               :stroke-dashoffset    0
-                               :animation            "show100 0.6s"}
-                   :cx        70
-                   :cy        70
-                   :r         60
-                   :transform "rotate(-90, 70, 70)"}]])
+   [:circle {:style     {:fill                 "transparent"
+                         :stroke               "green"
+                         :stroke-width         15
+                         :stroke-dasharray     534
+                         :transition           "stroke-dashoffset 1s"
+                         :animation-play-state "running"
+                         :stroke-dashoffset    0
+                         :animation            "showline 0.5s"}
+             :cx        70
+             :cy        70
+             :r         60
+             :transform "rotate(-90, 70, 70)"}]])
 
 (defn cross []
-  [:img {:src "http://activecalendar.com/wp-content/themes/activecalendar-2016/images/x-blue.svg"}])
+  [:svg {:style  {:overflow "visible"}
+         :width  110
+         :height 110}
+   [:line {:style {:fill                 "transparent"
+                   :stroke               "blue"
+                   :stroke-linecap       "round"
+                   :stroke-width         15
+                   :stroke-dasharray     534
+                   :transition           "stroke-dashoffset 1s"
+                   :animation-play-state "running"
+                   :stroke-dashoffset    0
+                   :animation            "showline 0.5s"}
+           :x1    0
+           :y1    0
+           :x2    110
+           :y2    110}]
+   [:line {:style     {:fill                 "transparent"
+                       :stroke               "blue"
+                       :stroke-linecap       "round"
+                       :stroke-width         15
+                       :stroke-dasharray     534
+
+                       :transition           "stroke-dashoffset 1s"
+                       :animation-play-state "running"
+                       :stroke-dashoffset    0
+                       :animation            "showline2 0.5s"}
+           :x1        0
+           :y1        0
+           :x2        110
+           :y2        110
+           :transform "rotate(90, 55, 55)"}]])
 
 (defn tile-mark [player]
   (if (= 1 player)
@@ -82,6 +112,7 @@
 (defn tile-line-mark []
   (let [mark-color (sb/mark-color)]
     [:div {:style {:height           50
+                   :position         "absolute"
                    :width            50
                    :border-radius    "50%"
                    :background-color mark-color}}]))
@@ -92,14 +123,14 @@
         game-state- (sb/game-state-)]
     (fn []
       (let [color (when @clicked?- (:color @(sb/get-player- @clicked?-)))]
-        [:div {:style    (cond-> {:flex            "1 0 33%"
-                                  :display         "flex"
-                                  :align-items     "center"
-                                  :justify-content "center"
-                                  :max-width       180
-                                  :max-height      180
-                                  :border          "1px solid grey"}
-                                 @clicked?- (assoc :background-color color))
+        [:div {:style    {:flex            "1 0 33%"
+                          :display         "flex"
+                          :align-items     "center"
+                          :justify-content "center"
+                          :max-width       180
+                          :max-height      180
+                          :min-height 180
+                          :border          "1px solid grey"}
                :on-click #(when (and (not @clicked?-)
                                      (= :play @game-state-))
                            (rf/dispatch [:tile-clicked id]))}

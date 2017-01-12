@@ -1,9 +1,24 @@
-@keyframes show100 {
+@keyframes showline {
   from {
     stroke-dashoffset: 537;
   }
 
   to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+@keyframes showline2 {
+  0% {
+    stroke-dashoffset: 537;
+  }
+
+  50% {
+   stroke-dashoffset: 537;
+  }
+
+  100% {
     stroke-dashoffset: 0;
   }
 }
