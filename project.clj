@@ -11,9 +11,9 @@
 
   :source-paths ["src/clj"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["docs/js/compiled" "target"]
 
-  :figwheel {:css-dirs ["resources/public/css"]
+  :figwheel {:css-dirs ["docs/css"]
              :server-port 8980}
 
   :profiles
@@ -29,15 +29,15 @@
      :source-paths ["src/cljs"]
      :figwheel     {:on-jsload "tic-tac-toe.core/mount-root"}
      :compiler     {:main                 tic-tac-toe.core
-                    :output-to            "resources/public/js/compiled/app.js"
-                    :output-dir           "resources/public/js/compiled/out"
+                    :output-to            "docs/js/compiled/app.js"
+                    :output-dir           "docs/js/compiled/out"
                     :asset-path           "js/compiled/out"
                     :source-map-timestamp true}}
 
     {:id           "min"
      :source-paths ["src/cljs"]
      :compiler     {:main            tic-tac-toe.core
-                    :output-to       "resources/public/js/compiled/app.js"
+                    :output-to       "docs/js/compiled/app.js"
                     :optimizations   :advanced
                     :closure-defines {goog.DEBUG false}
                     :pretty-print    false}}
