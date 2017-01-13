@@ -23,6 +23,8 @@
     :plugins      [[lein-figwheel "0.5.7"]]
     }}
 
+  :aliases {"release" ["do" "clean" ["cljsbuild" "once" "min"]]}
+
   :cljsbuild
   {:builds
    [{:id           "dev"

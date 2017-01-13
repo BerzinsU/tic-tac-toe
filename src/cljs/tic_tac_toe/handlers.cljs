@@ -37,14 +37,16 @@
 (rf/reg-event-db
   :reset-board
   (fn [db [_]]
-    (let [tiles (get-in db [:tiles])]
+    (let [tiles (get-in db [:tiles])
+          next-player (quot 2 (get-in db [:starting-player]))]
       (->
         (assoc-in db [:tiles] (reduce (fn [tiles [index value]]
                                         (assoc tiles index (dissoc value :clicked :mark)))
                                       {}
                                       tiles))
         (assoc-in [:game-state] :play)
-        (assoc-in [:active-player] 1)))))
+        (assoc-in [:active-player] nil)
+        (assoc-in [:starting-player] next-player)))))
 
 (rf/reg-event-db
   :reset-score

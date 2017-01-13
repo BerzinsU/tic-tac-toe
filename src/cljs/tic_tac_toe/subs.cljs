@@ -23,7 +23,8 @@
   (reaction (player-score @app-db id)))
 
 (defn- get-active-player [db]
-  (get-in db [:active-player]))
+  (or (get-in db [:active-player])
+      (get-in db [:starting-player])))
 
 (defn get-active-player- []
   (ra/reaction (get-active-player @app-db)))
